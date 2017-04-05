@@ -53,6 +53,12 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers
 
   config.after(:each) { Mongoid.purge! }
+
+  config.after(:all) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Rails.root.join('spec', 'support', 'uploads'))
+    end
+  end
 end
 
 RspecApiDocumentation.configure do |config|

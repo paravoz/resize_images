@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 class UserSession
   include Mongoid::Document
-  
+
   field :authorization_token, type: String
 
-  after_create :generate_authorization_token
+  has_many :raw_images, dependent: :destroy
+
+  before_create :generate_authorization_token
 
   private
 

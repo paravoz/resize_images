@@ -11,6 +11,10 @@ describe UserSession do
     it { is_expected.to respond_to(:authorization_token) }
   end
 
+  describe 'Associations' do
+    it { is_expected.to have_many(:raw_images) }
+  end
+
   describe 'Validations' do
     it { is_expected.to be_valid }
   end
@@ -22,7 +26,7 @@ describe UserSession do
       subject { @user_session }
 
       it do
-        is_expected.to callback(:generate_authorization_token).after(:create)
+        is_expected.to callback(:generate_authorization_token).before(:create)
       end
 
       it 'before save authorization_token must be nil' do
