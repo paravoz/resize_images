@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::ResizeImagesController < Api::V1::BaseController
   def index
     resize_images = current_user_session.resize_images.page(params[:page])

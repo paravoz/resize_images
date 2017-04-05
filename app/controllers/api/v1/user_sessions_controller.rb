@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::UserSessionsController < Api::V1::BaseController
   skip_before_action :authorize!, only: :create
 

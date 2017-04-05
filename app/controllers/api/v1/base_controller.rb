@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::BaseController < ApplicationController
   before_action :authorize!
 
@@ -29,14 +30,14 @@ class Api::V1::BaseController < ApplicationController
     return if collection.blank?
 
     controller = collection.first.model_name.plural
-    base_url = url_for(controller: controller, action: action, only_path: true)
+    url = url_for(controller: controller, action: action, only_path: true)
 
     {}.tap do |h|
-      h[:self] = "#{base_url}?page=#{collection.current_page}"
-      h[:prev] = "#{base_url}?page=#{collection.prev_page}" if collection.prev_page
-      h[:next] = "#{base_url}?page=#{collection.next_page}" if collection.next_page
-      h[:first] = "#{base_url}?page=1"
-      h[:last] = "#{base_url}?page=#{collection.total_pages}"
+      h[:self] = "#{url}?page=#{collection.current_page}"
+      h[:prev] = "#{url}?page=#{collection.prev_page}" if collection.prev_page
+      h[:next] = "#{url}?page=#{collection.next_page}" if collection.next_page
+      h[:first] = "#{url}?page=1"
+      h[:last] = "#{url}?page=#{collection.total_pages}"
     end
   end
 end
