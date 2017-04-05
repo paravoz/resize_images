@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 resource 'ResizeImage' do
@@ -11,7 +13,6 @@ resource 'ResizeImage' do
   end
 
   get '/api/v1/resize_images' do
-
     parameter :page, 'Page to view', 'Type' => 'Integer'
 
     example 'Retrieve paginated list of resized images', document: :public do

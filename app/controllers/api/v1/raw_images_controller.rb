@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::RawImagesController < Api::V1::BaseController
   def index
     raw_images = current_user_session.raw_images.page(params[:page])
