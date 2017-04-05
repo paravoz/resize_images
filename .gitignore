@@ -18,6 +18,7 @@
 coverage
 doc/api
 public/uploads
+public/apidocs
 *.swp
 *~
 .DS_Store

@@ -8,6 +8,10 @@ class UserSession
 
   before_create :generate_authorization_token
 
+  def resize_images
+    ResizeImage.in(raw_image_id: raw_images.pluck(:id))
+  end
+
   private
 
   def generate_authorization_token

@@ -10,6 +10,8 @@ describe RawImage do
   end
 
   describe 'Associations' do
+    it { is_expected.to have_many(:resize_images) }
+
     it { is_expected.to belong_to(:user_session) }
   end
 

@@ -3,6 +3,8 @@ require 'rails_helper'
 describe UserSession do
   before(:each) do
     @user_session = build(:user_session)
+    raw_image = create(:raw_image, user_session: @user_session)
+    create(:resize_image, raw_image: raw_image)
   end
 
   subject { @user_session }
@@ -13,6 +15,10 @@ describe UserSession do
 
   describe 'Associations' do
     it { is_expected.to have_many(:raw_images) }
+
+    it 'have_many resize_images' do
+      expect(subject.resize_images.count).to eq 1
+    end
   end
 
   describe 'Validations' do

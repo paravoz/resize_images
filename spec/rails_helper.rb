@@ -57,6 +57,7 @@ RSpec.configure do |config|
   config.after(:all) do
     if Rails.env.test?
       FileUtils.rm_rf(Rails.root.join('spec', 'support', 'uploads'))
+      FileUtils.rm_rf(Rails.root.join('tmp', 'resize_image'))
     end
   end
 end
