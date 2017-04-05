@@ -7,5 +7,6 @@ class RawImage
   validates :file, presence: true
   validates :user_session, presence: true
 
+  has_many :resize_images, dependent: :destroy
   belongs_to :user_session
 end
