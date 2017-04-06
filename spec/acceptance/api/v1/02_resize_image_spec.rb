@@ -19,14 +19,32 @@ resource 'ResizeImage' do
       2.times { create(:resize_image, raw_image: raw_image) }
 
       do_request
+
       expect(status).to eq 200
+
+      list_images = json_response[:data]
+
+      expect(list_images.count).to eq 2
+
+      image_data = list_images.first
+
+      expect(image_data[:type]).to eq('resize-images')
+      expect(image_data[:id]).to_not be_nil
+      expect(image_data.dig(:attributes, :'file-url')).to_not be_nil
+      expect(image_data.dig(:attributes, :width)).to eq 5
+      expect(image_data.dig(:attributes, :height)).to eq 5
+
+      expect(json_response[:links]).not_to be_empty
     end
 
     example 'Unauthorized request to list of resized images', document: false do
       header 'Authorization', nil
 
       do_request
+
       expect(status).to eq 401
+
+      expect(json_response).to eq(unauthorized_response)
     end
   end
 
@@ -35,7 +53,14 @@ resource 'ResizeImage' do
 
     example 'Getting a specific resized image', document: :public do
       do_request
+
       expect(status).to eq 200
+
+      expect(json_response.dig(:data, :type)).to eq('resize-images')
+      expect(json_response.dig(:data, :id)).to_not be_nil
+      expect(json_response.dig(:data, :attributes, :'file-url')).to_not be_nil
+      expect(json_response.dig(:data, :attributes, :width)).to eq 5
+      expect(json_response.dig(:data, :attributes, :height)).to eq 5
     end
   end
 
@@ -44,7 +69,10 @@ resource 'ResizeImage' do
 
     example 'Resized image not found', document: false do
       do_request
+
       expect(status).to eq 404
+
+      expect(json_response).to eq(not_found_response)
     end
   end
 
@@ -63,7 +91,14 @@ resource 'ResizeImage' do
 
     example 'Create resize image', document: :public do
       do_request
+
       expect(response_status).to eq(200)
+
+      expect(json_response.dig(:data, :type)).to eq('resize-images')
+      expect(json_response.dig(:data, :id)).to_not be_nil
+      expect(json_response.dig(:data, :attributes, :'file-url')).to_not be_nil
+      expect(json_response.dig(:data, :attributes, :width)).to eq 5
+      expect(json_response.dig(:data, :attributes, :height)).to eq 5
     end
   end
 
@@ -72,7 +107,10 @@ resource 'ResizeImage' do
 
     example 'Create resize image', document: false do
       do_request
+
       expect(response_status).to eq(422)
+
+      expect(json_response).to eq(resize_image_validation_errors)
     end
   end
 end

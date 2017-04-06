@@ -5,8 +5,8 @@ class ApplicationController < ActionController::API
 
   private
 
-  def respond_not_found(exception)
-    respond_with_errors([exception.message], :not_found)
+  def respond_not_found
+    respond_with_errors(['Document(s) not found'], :not_found)
   end
 
   def respond_with_object(object, options = {})
