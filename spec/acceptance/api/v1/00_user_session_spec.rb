@@ -13,7 +13,16 @@ resource 'UserSession' do
       )
 
       do_request
+
       expect(status).to eq 200
+
+      expect(json_response.dig(:data, :type)).to eq('user-sessions')
+
+      expect(json_response.dig(:data, :id)).to_not be_nil
+
+      expect(
+        json_response.dig(:data, :attributes, :'authorization-token')
+      ).to_not be_nil
     end
   end
 end
